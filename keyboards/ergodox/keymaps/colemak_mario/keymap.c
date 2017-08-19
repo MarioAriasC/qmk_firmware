@@ -1,4 +1,5 @@
 #include "ergodox.h"
+#include "keymap_spanish.h"
 
 enum {
     BASE = 0,
@@ -14,8 +15,11 @@ enum {
 #define MACRO_COLUMN_MODE 0
 #define MACRO_TERMINAL 1
 
-#define M_COLUMN M(MACRO_COLUMN_MODE)
-#define M_TERM M(MACRO_TERMINAL)
+#define M_COLUMN  M(MACRO_COLUMN_MODE)
+#define M_TERM    M(MACRO_TERMINAL)
+
+#define I_COLUMN  ALGR(LCTL(LGUI(ES_MINS)))
+#define I_TERM    ALGR(KC_F12)
 
 
 
@@ -46,18 +50,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,     KC_Q,       KC_W,       KC_F,       KC_P,        KC_G,        KC_HOME,
         KC_CAPS,    KC_A,       KC_R,       KC_S,       KC_T,        KC_D,
         KC_LSFT,    KC_Z,       KC_X,       KC_C,       KC_V,        KC_B,        KC_GRV,
-        KC_DEL,     KC_PGUP,    CTL_T(KC_PGDN),ALT_T(KC_LBRC),GUI_T(KC_RBRC),
+        KC_DEL,     KC_PGUP,CTL_T(KC_PGDN),ALT_T(ES_GRV),GUI_T(ES_PLUS),
 
                     DF(NUM),    DF(MOUSE),
                                 MO(IDEA),
         KC_LSFT,    KC_BSPC,    DF(FN),
 
         // right hand
-        KC_EQL,       KC_6,       KC_7,       KC_8,       KC_9,        KC_0,        KC_BSPC,
-        KC_END,       KC_J,       KC_L,       KC_U,       KC_Y,        KC_SCLN,     KC_MINS,
+        ES_IEXL,       KC_6,       KC_7,       KC_8,       KC_9,        KC_0,        KC_BSPC,
+        KC_END,       KC_J,       KC_L,       KC_U,       KC_Y,        ES_NTIL,     ES_APOS,
                       KC_H,       KC_N,       KC_E,       KC_I,        KC_O,        KC_ENT,
-        KC_SLSH,      KC_K,       KC_M,       KC_COMM,    KC_DOT,      KC_UP,       KC_RSFT,
-                                  GUI_T(KC_QUOT),ALT_T(KC_BSLS), KC_LEFT, KC_DOWN,  KC_RIGHT,
+        ES_MINS,      KC_K,       KC_M,       KC_COMM,    KC_DOT,      KC_UP,       KC_RSFT,
+                                  GUI_T(ES_ACUT),ALT_T(KC_BSLS), KC_LEFT, KC_DOWN,  KC_RIGHT,
 
         KC__VOLDOWN,     KC_RCTL,
         KC__MUTE,
@@ -274,8 +278,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______,        _______,    _______,
 
        // right hand
-       KC_VOLU,        _______,    _______,    _______,    _______,    M_TERM,    _______,
-       M_COLUMN,        _______,    _______,    KC_MS_WH_UP,_______,    _______,    _______,
+       KC_VOLU,        _______,    _______,    _______,    _______,    I_TERM,    _______,
+       I_COLUMN,        _______,    _______,    KC_MS_WH_UP,_______,    _______,    _______,
                        _______,    KC_MS_WH_LEFT,KC_MS_WH_DOWN,KC_MS_WH_RIGHT,_______,    _______,
        KC_MUTE,        _______,    KC_MS_BTN1, KC_MS_BTN2, _______,    _______,    _______,
                                    _______,    _______,    _______,    _______,    _______,
