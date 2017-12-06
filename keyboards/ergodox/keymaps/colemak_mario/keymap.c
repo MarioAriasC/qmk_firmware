@@ -10,7 +10,7 @@ enum {
     IDEA
 };
 
-#define _______ KC_TRNS
+#define _______   KC_TRNS
 
 #define MACRO_COLUMN_MODE 0
 #define MACRO_TERMINAL 1
@@ -18,9 +18,29 @@ enum {
 #define M_COLUMN  M(MACRO_COLUMN_MODE)
 #define M_TERM    M(MACRO_TERMINAL)
 
-#define I_COLUMN  ALGR(LCTL(LGUI(ES_MINS)))
-#define I_TERM    ALGR(KC_F12)
+#define BEL       UC(0x07)
 
+// Column mode
+#define I_COLUMN  ALGR(LCTL(LGUI(ES_MINS)))
+// Terminal
+#define I_TERM    ALGR(KC_F12)
+// Line comment
+#define I_LN_COM  LCTL(LGUI(KC_7))
+// Block comment
+#define I_BK_COM  LCTL(LGUI(KC_8))
+// Reformat code
+#define I_REFORM  LALT(LGUI(KC_L))
+// Rename
+#define I_RENAME  LSFT(KC_F6)
+// Find usages
+#define I_FUSAGE  LALT(KC_F7)
+
+// Tmux prefix
+#define T_PREFIX  LCTL(KC_B)
+
+// Special paste
+
+#define S_PASTE   LSFT(LGUI(KC_V))
 
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -37,11 +57,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   | Del  | PgUp |Ctl/PD|Alt/[ |Cmd/] |                                       |Cmd/{ |Alt/} | LEFT | DOWN | RIGHT|
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,--------------.        ,--------------.
- *                                        | Num  | Mouse |        | Vdwn | Ctrl  |
+ *                                        | Num  | Mouse |        | Qwer | Ctrl  |
  *                                 ,------|------|-------|        |------+-------+------.
- *                                 |      |      | IDEA  |        | Mute |       |      |
+ *                                 |      |      | IDEA  |        |SPaste|       |      |
  *                                 |LShift|Backsp|-------|        |------|  ENT  |Space |
- *                                 |      |      | Fn    |        | Qwer |       |      |
+ *                                 |      |      | Fn    |        | T-pre|       |      |
  *                                 `---------------------'        `---------------------'
  */
 [BASE] = KEYMAP(  // layer 0 : default
@@ -63,9 +83,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         ES_MINS,      KC_K,       KC_M,       KC_COMM,    KC_DOT,      KC_UP,       KC_RSFT,
                                   GUI_T(ES_ACUT),ALT_T(KC_BSLS), KC_LEFT, KC_DOWN,  KC_RIGHT,
 
-        KC__VOLDOWN,     KC_RCTL,
-        KC__MUTE,
-        DF(QWERTY),    KC_ENT,     KC_SPC
+        DF(QWERTY),     KC_RCTL,
+        S_PASTE,
+        T_PREFIX,    KC_ENT,     KC_SPC
     ),
 
 /* Keymap 1: Spanish QWERTY layer (games)
@@ -106,9 +126,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                        KC_H,       KC_J,       KC_K,       KC_L,       KC_SCLN,    _______,
        _______,        KC_N,       KC_M,       _______,    _______,    _______,    _______,
                                    _______,    _______,    _______,    _______,    _______,
-       _______,        _______,
+       DF(BASE),        _______,
        _______,
-       DF(BASE),        _______,    _______
+       _______,        _______,    _______
     ),
 
 /* Keymap 2: Function Layer
@@ -155,50 +175,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______,        _______,
        _______,
        _______,        _______,      _______
-),
-
-/* Numlock
- *
- * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      | Play |           | Vol+ |  (   |  )   |  =   |  /   |  *   |        |
- * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      |  Up  |      |      |      |           |      |      |  7   |  8   |  9   |  -   |        |
- * |--------+------+------+------+------+------| Rwd  |           | Vol- |------+------+------+------+------+--------|
- * |        |      | Left | Down |Right |      |------|           |------|      |  4   |  5   |  6   |  +   |        |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      |      |      |      |      | Fwd  |           | Mute |      |  1   |  2   |  3   |Enter |        |
- * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   |      |      |      |      |      |                                       |  0   |  0   |  ,   |Enter |  .   |
- *   `----------------------------------'                                       `----------------------------------'
- *                                        ,-------------.       ,-------------.
- *                                        | Base |      |       |      |      |
- *                                 ,------|------|------|       |------+------+------.
- *                                 |      |      |      |       |      |      |      |
- *                                 |      |      |------        |------|      |      |
- *                                 |      |      |      |       |      |      |      |
- *                                 `--------------------'       `--------------------'
- */
-[NUM] = KEYMAP(
-       _______,        _______,    _______,    _______,    _______,    _______,    KC_MPLY,
-       _______,        _______,    _______,    KC_UP,      _______,    _______,    KC_MRWD,
-       _______,        _______,    KC_LEFT,    KC_DOWN,   KC_RIGHT,    _______,
-       _______,        _______,    _______,    _______,    _______,    _______,    KC_MFFD,
-       _______,        _______,    _______,    _______,    _______,
-
-                       DF(BASE),   _______,
-                                   _______,
-       _______,        _______,    _______,
-
-       // right hand
-       KC_VOLU,        LSFT(KC_8), LSFT(KC_9), KC_PEQL,    KC_PSLS,    KC_PAST,    _______,
-       KC_VOLD,        _______,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,    _______,
-                       _______,    KC_P4,      KC_P5,      KC_P6,      KC_PPLS,    _______,
-       KC_MUTE,        _______,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,    _______,
-                                   KC_P0,      KC_P0,      KC_PDOT,    KC_PENT,    KC_DOT,
-
-       _______,        _______,
-       _______,
-       _______,        _______,    _______
 ),
 
 /* Mouse
@@ -248,9 +224,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* IDEA
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      | Play |           | Vol+ |      |      |      |      | Term |        |
+ * |        |      |      |      |      |      | Renm |           | Usag |      | LnCm | BkCm |      | Term |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        |      |      | MsUp |      |      |      |           |      |      |      | WhUp |      |      |        |
+ * |        |      |      | MsUp |      |      |      |           |      |      | Refm | WhUp |      |      |        |
  * |--------+------+------+------+------+------| Rwd  |           | Col  |------+------+------+------+------+--------|
  * |        |      | MsLf | MsDn | MsRh |      |------|           |------|      | WhLf | WhDn | WhRh |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -267,7 +243,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `--------------------'
  */
 [IDEA] = KEYMAP(
-       _______,        _______,    _______,    _______,    _______,    _______,    KC_MPLY,
+       _______,        _______,    _______,    _______,    _______,    _______,    I_RENAME,
        _______,        _______,    _______,    KC_MS_UP,   _______,    _______,    KC_MRWD,
        _______,        _______,    KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT,_______,
        _______,        _______, KC_MS_ACCEL0,KC_MS_ACCEL1,KC_MS_ACCEL2,_______,    KC_MFFD,
@@ -278,11 +254,54 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______,        _______,    _______,
 
        // right hand
-       KC_VOLU,        _______,    _______,    _______,    _______,    I_TERM,    _______,
-       I_COLUMN,        _______,    _______,    KC_MS_WH_UP,_______,    _______,    _______,
+       I_FUSAGE,       _______,    I_LN_COM,    I_BK_COM,    _______,    I_TERM,    _______,
+       I_COLUMN,       _______,   I_REFORM,    KC_MS_WH_UP,_______,    _______,    _______,
                        _______,    KC_MS_WH_LEFT,KC_MS_WH_DOWN,KC_MS_WH_RIGHT,_______,    _______,
        KC_MUTE,        _______,    KC_MS_BTN1, KC_MS_BTN2, _______,    _______,    _______,
                                    _______,    _______,    _______,    _______,    _______,
+
+       _______,        _______,
+       _______,
+       _______,        _______,    _______
+),
+/* Numlock and RTS
+ *
+ * ,--------------------------------------------------.           ,--------------------------------------------------.
+ * |        |   1  |   2  |   3  |   4  |   5  |   6  |           | Vol+ |  (   |  )   |  =   |  /   |  *   |        |
+ * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+ * |        |      |  Up  |      |      |      |      |           |      |      |  7   |  8   |  9   |  -   |        |
+ * |--------+------+------+------+------+------|  7   |           | Vol- |------+------+------+------+------+--------|
+ * |        | Left | Down |Right |      |      |------|           |------|      |  4   |  5   |  6   |  +   |        |
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+ * |        |      |      |      |      |      |  8   |           | Mute |      |  1   |  2   |  3   |Enter |        |
+ * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+ *   |      |      |      |      | Ctrl |                                       |  0   |  0   |  ,   |Enter |  .   |
+ *   `----------------------------------'                                       `----------------------------------'
+ *                                        ,-------------.       ,-------------.
+ *                                        | Base |      |       |      |      |
+ *                                 ,------|------|------|       |------+------+------.
+ *                                 |      |      |      |       |      |      |      |
+ *                                 |      |      |------        |------|      |      |
+ *                                 |      |      |      |       |      |      |      |
+ *                                 `--------------------'       `--------------------'
+ */
+[NUM] = KEYMAP(
+       _______,        KC_1,       KC_2,       KC_3,         KC_4,       KC_5   ,    KC_6,
+       _______,        _______,    KC_UP,      _______,      _______,    _______,    KC_7,
+       _______,        KC_LEFT,    KC_DOWN,    KC_RIGHT,   _______,    _______,
+       _______,        _______,    _______,    _______,    _______,    _______,    KC_8,
+       _______,        _______,    _______,    _______,    KC_RCTL,
+
+                       DF(BASE),   _______,
+                                   _______,
+       _______,        _______,    _______,
+
+       // right hand
+       KC_VOLU,        LSFT(KC_8), LSFT(KC_9), KC_PEQL,    KC_PSLS,    KC_PAST,    _______,
+       KC_VOLD,        _______,    KC_P7,      KC_P8,      KC_P9,      KC_PMNS,    _______,
+                       _______,    KC_P4,      KC_P5,      KC_P6,      KC_PPLS,    _______,
+       KC_MUTE,        _______,    KC_P1,      KC_P2,      KC_P3,      KC_PENT,    _______,
+                                   KC_P0,      KC_P0,      KC_PDOT,    KC_PENT,    KC_DOT,
 
        _______,        _______,
        _______,
@@ -302,6 +321,10 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt){
     }
     return MACRO_NONE;
 };
+
+void matrix_init_user(void) {
+  set_unicode_input_mode(UC_OSX);
+}
 
 // Runs constantly in the background, in a loop.
 void matrix_scan_user(void) {
