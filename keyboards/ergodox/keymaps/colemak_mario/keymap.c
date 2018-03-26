@@ -34,6 +34,8 @@ enum {
 #define I_RENAME  LSFT(KC_F6)
 // Find usages
 #define I_FUSAGE  LALT(KC_F7)
+// Code for Packt
+#define P_CODE    LCTL(ALGR(KC_X))
 
 // Tmux prefix
 #define T_PREFIX  LCTL(KC_B)
@@ -59,9 +61,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                        ,--------------.        ,--------------.
  *                                        | Num  | Mouse |        | Qwer | Ctrl  |
  *                                 ,------|------|-------|        |------+-------+------.
- *                                 |      |      | IDEA  |        |SPaste|       |      |
+ *                                 |      |      | FN    |        |SPaste|       |      |
  *                                 |LShift|Backsp|-------|        |------|  ENT  |Space |
- *                                 |      |      | Fn    |        | T-pre|       |      |
+ *                                 |      |      | IDEA  |        | T-pre|       |      |
  *                                 `---------------------'        `---------------------'
  */
 [BASE] = KEYMAP(  // layer 0 : default
@@ -73,8 +75,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_DEL,     KC_PGUP,CTL_T(KC_PGDN),ALT_T(ES_GRV),GUI_T(ES_PLUS),
 
                     DF(NUM),    DF(MOUSE),
-                                MO(IDEA),
-        KC_LSFT,    KC_BSPC,    DF(FN),
+                                DF(FN),
+        KC_LSFT,    KC_BSPC,    MO(IDEA),
 
         // right hand
         ES_IEXL,       KC_6,       KC_7,       KC_8,       KC_9,        KC_0,        KC_BSPC,
@@ -102,11 +104,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        |      |      |       |      |      |
+ *                                        |      |      |       | Base |      |
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      |      |       |      |        |      |
  *                                 |      |      |------|       |------|        |      |
- *                                 |      |      |      |       | Base |        |      |
+ *                                 |      |      |      |       |      |        |      |
  *                                 `--------------------'       `----------------------'
  */
 [QWERTY] = KEYMAP(  // layer 1: QWERTY layer (games)
@@ -147,9 +149,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 *                                        ,-------------.       ,-------------.
 *                                        |      |      |       |      |      |
 *                                 ,------|------|------|       |------+------+------.
-*                                 |      |      |      |       |      |      |      |
-*                                 |      |      |------|       |------|      |      |
 *                                 |      |      | Base |       |      |      |      |
+*                                 |      |      |------|       |------|      |      |
+*                                 |      |      |      |       |      |      |      |
 *                                 `--------------------'       `--------------------'
 */
 // FN
@@ -162,8 +164,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______,        _______,      _______,     _______,    _______,
 
                        _______,      _______,
-                                     _______,
-       _______,        _______,      DF(BASE),
+                                     DF(BASE),
+       _______,        _______,      _______,
 
        // right hand
        KC_F7,          KC_F8,        KC_F9,        KC_F10,     KC_F11,      KC_F12,     _______,
@@ -230,7 +232,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------| Rwd  |           | Col  |------+------+------+------+------+--------|
  * |        |      | MsLf | MsDn | MsRh |      |------|           |------|      | WhLf | WhDn | WhRh |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |      | Acc0 | Acc1 | Acc2 |      | Fwd  |           | Mute |      | Btn1 | Btn2 |      |      |        |
+ * |        |      | Code | Acc1 | Acc2 |      | Fwd  |           | Mute |      | Btn1 | Btn2 |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   |      |      |      |      |      |                                       |      |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
@@ -246,7 +248,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
        _______,        _______,    _______,    _______,    _______,    _______,    I_RENAME,
        _______,        _______,    _______,    KC_MS_UP,   _______,    _______,    KC_MRWD,
        _______,        _______,    KC_MS_LEFT, KC_MS_DOWN, KC_MS_RIGHT,_______,
-       _______,        _______, KC_MS_ACCEL0,KC_MS_ACCEL1,KC_MS_ACCEL2,_______,    KC_MFFD,
+       _______,        _______,    P_CODE,    KC_MS_ACCEL1,KC_MS_ACCEL2,_______,    KC_MFFD,
        _______,        _______,    _______,    _______,    _______,
 
                        _______,    DF(BASE),
